@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Подтверждение оплаты</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 115vh;
+      background-color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+
+    .meter-readings {
+      width: 100%;
+      max-width: 480px;
+      padding: 16px;
+      background: #f5f5f5;
+      border-radius: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .check-circle {
+      width: 60px;
+      height: 60px;
+      background-color: #4CAF50; /* Зеленый цвет для галочки */
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .check-circle svg {
+      width: 30px;
+      height: 30px;
+      fill: white; /* Белый цвет галочки */
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #2C2C2C;
+    }
+
+    .order-number {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .payment-details {
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 16px;
+      color: #2C2C2C;
+    }
+
+    .detail-row span:last-child {
+      font-weight: bold;
+    }
+
+    .card-number {
+      font-family: monospace;
+    }
+
+    .primary-button,
+    .secondary-button {
+      width: 100%;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: background-color 0.3s ease;
+      text-decoration: none; /* Убираем подчеркивание у ссылки */
+      display: block; /* Делаем ссылку блочным элементом */
+      text-align: center; /* Центрируем текст */
+    }
+
+    .primary-button {
+      background-color: #2C2C2C;
+      color: white;
+    }
+
+    .primary-button:hover {
+      background-color: black;
+    }
+
+    .secondary-button {
+      background-color: #f0f0f0;
+      color: #2C2C2C;
+    }
+
+    .secondary-button:hover {
+      background-color: #e0e0e0;
+    }
+
+    .receipt-note {
+      font-size: 14px;
+      color: #666;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="meter-readings">
+    <div class="payment-confirmation">
+      <div class="check-circle">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+        </svg>
+      </div>
+
+      <h2>Оплата прошла успешно!</h2>
+      <p class="order-number">Ваш заказ #2025-0123 оформлен</p>
+
+      <div class="payment-details">
+        <div class="detail-row">
+          <span>Сумма:</span>
+          <span>{ИтоговаяСумма} ₽</span>
+        </div>
+        <div class="detail-row">
+          <span>Способ оплаты:</span>
+          <span class="card-number">•••• 4242</span>
+        </div>
+      </div>
+
+      <a href="|Main" class="primary-button">Вернуться на главную</a>
+
+      <p class="receipt-note">Квитанция об оплате отправлена на вашу почту</p>
+    </div>
+  </div>
+</body>
+</html>

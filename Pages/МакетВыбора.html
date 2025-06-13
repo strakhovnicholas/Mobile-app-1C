@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЖКХ Платежи</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>ЖКХ Платежи</h1>
+    </header>
+    <style>
+      * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    padding-bottom: 60px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.header-icons {
+    display: flex;
+    gap: 12px;
+}
+
+.header-icons a {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+.account-card {
+    background: white;
+    margin: 16px;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.account-label {
+    color: #666;
+    font-size: 14px;
+}
+
+.account-number {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 4px 0 12px;
+}
+
+.debt {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.debt-label {
+    color: #666;
+    font-size: 14px;
+}
+
+.debt-amount {
+    font-size: 18px;
+    font-weight: 600;
+    color: #e53935;
+}
+
+.services-list {
+    margin: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-link {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background: white;
+    border: none;
+    border-radius: 12px;
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    margin-bottom: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+.service-icon {
+    margin-right: 12px;
+    font-size: 20px;
+}
+
+.arrow {
+    margin-left: auto;
+    color: #666;
+}
+
+.recent-payments {
+    margin: 16px;
+}
+
+.recent-payments h2 {
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.payment-item {
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.payment-date {
+    color: #666;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.payment-amount {
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.payment-number {
+    color: #666;
+    font-size: 14px;
+    text-align: right;
+    margin-top: 4px;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px;
+    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: #666;
+    text-decoration: none;
+}
+
+.nav-link.active {
+    color: #1976d2;
+}
+
+.nav-icon {
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+
+.nav-text {
+    font-size: 12px;
+}
+
+.meter-readings {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.info-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #666;
+}
+
+.period-selector {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.period-selector label {
+  display: block;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.date-picker {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+}
+
+.meters-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.meter-item {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  display: flex;
+  gap: 16px;
+}
+
+.meter-icon {
+  width: 40px;
+  height: 40px;
+  background: #f0f0f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+.meter-content {
+  flex: 1;
+}
+
+.meter-content h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.meter-content input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.previous-reading {
+  color: #666;
+  font-size: 14px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #666;
+  font-size: 12px;
+  gap: 4px;
+}
+
+.nav-item.active {
+  color: #007AFF;
+}
+
+.nav-item i {
+  font-size: 20px;
+} 
+    </style>
+    <main>
+        <div class="account-card">
+            <div class="account-label">Лицевой счет</div>
+            <div class="account-number">№ {ЛицевойСчет}</div>
+            <div class="debt">
+                <div class="debt-label">Текущая задолженность:</div>
+                <div class="debt-amount">{СуммаЗадолженности} ₽</div>
+            </div>
+        </div>
+
+        <div class="services-list">
+            <a href="|Services" class="service-link">
+                <span class="service-icon">⚡</span>
+                <span>Коммунальные услуги</span>
+                <span class="arrow">›</span>
+            </a>
+
+            <a href="|HouseMaintenance" class="service-link">
+                <span class="service-icon">🏠</span>
+                <span>Содержание дома</span>
+                <span class="arrow">›</span>
+            </a>
+
+            <a href="#" class="service-link">
+                <span class="service-icon">•••</span>
+                <span>Прочие услуги</span>
+                <span class="arrow">›</span>
+            </a>
+        </div>
+
+        <div class="recent-payments">
+            <h2>Последние платежи</h2>
+          <1С:ДляКаждого Платежи>
+            <div class="payment-item">
+                <div class="payment-info">
+                    <div class="payment-title">{Элемент.ТипУслуги}</div>
+                    <div class="payment-date">{Элемент.Дата}</div>
+                </div>
+                <div class="payment-details">
+                    <div class="payment-amount">-{Элемент.Сумма}₽</div>
+                    <div class="payment-number">№ {Элемент.Номер}</div>
+                </div>
+            </div>
+          </1С:ДляКаждого>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="|Main" class="nav-link active">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-text">Главная</span>
+        </a>
+        <a href="|Statistics" class="nav-link">
+            <span class="nav-icon">📊</span>
+            <span class="nav-text">Статистика</span>
+        </a>
+        <a href="|Payments" class="nav-link">
+            <span class="nav-icon">💳</span>
+            <span class="nav-text">Платежи</span>
+        </a>
+    </nav>
+</body>
+</html>

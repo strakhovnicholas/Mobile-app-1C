@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Счёт за коммунальные услуги</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 120vh;
+            background-color: #ffffff;
+            font-family: Arial, sans-serif;
+            padding: 16px;
+        }
+
+        .bill-container {
+            width: 100%;
+            max-width: 480px;
+            background-color: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .bill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .bill-header h1 {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2C2C2C;
+        }
+
+        .bill-number {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .bill-dates {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .bill-dates p {
+            margin: 5px 0;
+        }
+
+        .services-list {
+            margin-bottom: 20px;
+        }
+
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .service-info {
+            flex-grow: 1;
+        }
+
+        .service-name {
+            font-weight: 500;
+            margin-bottom: 4px;
+            font-size: 16px;
+            color: #2C2C2C;
+        }
+
+        .service-usage {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .service-price {
+            font-weight: 500;
+            font-size: 16px;
+            color: #2C2C2C;
+        }
+
+        .bill-summary {
+            margin-top: 20px;
+        }
+
+        .bill-summary > div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #2C2C2C;
+        }
+
+        .subtotal, .service-fee {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .total {
+            font-weight: 600;
+            font-size: 18px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        /* Стили для ссылки (вместо кнопки) */
+        .pay-link {
+            width: 100%;
+            background-color: #2C2C2C;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 16px;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            text-decoration: none; /* Убираем подчеркивание */
+            display: inline-block; /* Чтобы ссылка вела себя как блок */
+        }
+
+        .pay-link:hover {
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="bill-container">
+        <div class="bill-header">
+            <h1>Счёт за коммунальные услуги</h1>
+        </div>
+
+        <div class="bill-dates">
+            <p>Дата счёта: {ДатаСчета}</p>
+        </div>
+
+        <div class="services-list">
+          <1С:ДляКаждого Услуги>
+            <div class="service-item">
+                <div class="service-info">
+                    <div class="service-name">{Элемент.Название}</div>
+                    <div class="service-usage">{Элемент.Объем} {Элемент.ЕдиницаИзмерения}</div>
+                </div>
+                <div class="service-price">{Элемент.Сумма} ₽</div>
+           
+            </div>
+	   </1С:ДляКаждого>
+        </div>
+
+        <div class="bill-summary">
+            <div class="total">
+                <span>Итого</span>
+                <span>{СуммаИтого} ₽</span>
+            </div>
+        </div>
+
+        <!-- Ссылка "Оплатить" -->
+        <a href="|Payment" class="pay-link">Оплатить</a>
+    </div>
+</body>
+</html>

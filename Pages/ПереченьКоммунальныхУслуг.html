@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Показания счетчиков</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 115vh;
+      background-color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+
+    .meter-readings {
+      width: 100%;
+      max-width: 480px;
+      padding: 16px;
+      background: #f5f5f5;
+      border-radius: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 0;
+      color: #2C2C2C;
+    }
+
+    .meters-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .meter-item {
+      background: white;
+      padding: 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 25px;
+    }
+
+    .meter-content {
+      flex: 1;
+    }
+
+    .meter-content h3 {
+      margin: 0 0 12px 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #2C2C2C;
+    }
+
+    .meter-content input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      font-size: 16px;
+      background-color: #f9f9f9;
+    }
+
+    .meter-content input.invalid {
+      border-color: red; /* Красная рамка при ошибке */
+    }
+
+    .previous-reading {
+      color: #666;
+      font-size: 14px;
+    }
+
+    /* Стили для ссылки (вместо кнопки) */
+    .calculate-link {
+      width: 100%;
+      max-width: 280px;
+      padding: 16px;
+      background-color: #2C2C2C;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 16px;
+      transition: background-color 0.3s ease;
+      text-decoration: none; /* Убираем подчеркивание */
+      display: inline-block; /* Чтобы ссылка вела себя как блок */
+    }
+
+    .calculate-link:disabled {
+      background-color: #ccc; /* Серый цвет, если ссылка заблокирована */
+      cursor: not-allowed;
+      pointer-events: none; /* Отключаем клики */
+    }
+
+    .calculate-link:hover:not(:disabled) {
+      background-color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="meter-readings">
+    <header class="header">
+      <h1>Показания счетчиков</h1>
+      <button class="info-button">
+        <i class="fas fa-info-circle"></i>
+      </button>
+    </header>
+
+    <div class="meters-list">
+      <!-- Холодная вода -->
+      <div class="meter-item">
+        <div class="meter-content">
+          <h3>💧 Холодная вода</h3>
+          <input type="text" class="meter-input" placeholder="Введите показания">
+          <div class="previous-reading">
+            Предыдущие: <span class="previous-value">{ПредыдущиеХолоднаяВода}</span> м³
+          </div>
+        </div>
+      </div>
+
+      <!-- Горячая вода -->
+      <div class="meter-item">
+        <div class="meter-content">
+          <h3>♨️ Горячая вода</h3>
+          <input type="text" class="meter-input" placeholder="Введите показания">
+          <div class="previous-reading">
+            Предыдущие: <span class="previous-value">{ПредыдущиеГорячаяВода}</span> м³
+          </div>
+        </div>
+      </div>
+
+      <!-- Газ -->
+      <div class="meter-item">
+        <div class="meter-content">
+          <h3>🔥 Газ</h3>
+          <input type="text" class="meter-input" placeholder="Введите показания">
+          <div class="previous-reading">
+            Предыдущие: <span class="previous-value">{ПредыдущиеГаз}</span> м³
+          </div>
+        </div>
+      </div>
+
+      <!-- Электричество -->
+      <div class="meter-item">
+        <div class="meter-content">
+          <h3>⚡ Электричество</h3>
+          <input type="text" class="meter-input" placeholder="Введите показания">
+          <div class="previous-reading">
+            Предыдущие: <span class="previous-value">{ПредыдущиеЭлектричество}</span> кВт⋅ч
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ссылка "Составить счет" -->
+  <a href="|Bill" class="calculate-link" id="calculate-link" disabled>Составить счет</a>
+
+  <script>
+    // Получаем все поля ввода и ссылку
+    const inputs = document.querySelectorAll('.meter-input');
+    const calculateLink = document.getElementById('calculate-link');
+
+    // Функция для проверки ввода
+    function validateInputs() {
+      let allValid = true;
+
+      inputs.forEach(input => {
+        const currentValue = parseFloat(input.value);
+        const previousValue = parseFloat(input.closest('.meter-item').querySelector('.previous-value').textContent);
+
+        // Проверяем, что введено число и оно больше предыдущего значения
+        if (input.value.trim() !== "" && !isNaN(currentValue)) {
+          if (currentValue <= previousValue) {
+            input.classList.add('invalid'); // Подчеркиваем красным
+            allValid = false;
+          } else {
+            input.classList.remove('invalid'); // Убираем подчеркивание
+          }
+        } else {
+          input.classList.remove('invalid'); // Убираем подчеркивание, если поле пустое
+        }
+      });
+
+      // Блокируем или разблокируем ссылку
+      calculateLink.disabled = !allValid;
+      if (calculateLink.disabled) {
+        calculateLink.removeAttribute('href'); // Убираем ссылку, если заблокирована
+      } else {
+        calculateLink.href = "|Bill"; // Восстанавливаем ссылку
+      }
+    }
+
+    // Добавляем обработчики событий на каждое поле ввода
+    inputs.forEach(input => {
+      input.addEventListener('input', () => {
+        // Разрешаем ввод только цифр и точки
+        input.value = input.value.replace(/[^0-9.]/g, ''); // Удаляем все нецифровые символы, кроме точки
+        validateInputs(); // Проверяем ввод
+      });
+    });
+
+    // Инициализируем проверку при загрузке страницы
+    validateInputs();
+  </script>
+</body>
+</html>
