@@ -1,2 +1,5 @@
 *.bsl linguist-language=1C
 *.os linguist-language=1C
+*.html linguist-detectable=false
+*.css linguist-detectable=false
+*.js linguist-detectable=false
